@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.5
 // 	protoc        v5.29.2
-// source: pkg/proto/key.proto
+// source: pkg/proto/email.proto
 
 package proto
 
@@ -29,7 +29,7 @@ type GetPrivateKeyRequestDto struct {
 
 func (x *GetPrivateKeyRequestDto) Reset() {
 	*x = GetPrivateKeyRequestDto{}
-	mi := &file_pkg_proto_key_proto_msgTypes[0]
+	mi := &file_pkg_proto_email_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41,7 +41,7 @@ func (x *GetPrivateKeyRequestDto) String() string {
 func (*GetPrivateKeyRequestDto) ProtoMessage() {}
 
 func (x *GetPrivateKeyRequestDto) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_proto_key_proto_msgTypes[0]
+	mi := &file_pkg_proto_email_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54,7 +54,7 @@ func (x *GetPrivateKeyRequestDto) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPrivateKeyRequestDto.ProtoReflect.Descriptor instead.
 func (*GetPrivateKeyRequestDto) Descriptor() ([]byte, []int) {
-	return file_pkg_proto_key_proto_rawDescGZIP(), []int{0}
+	return file_pkg_proto_email_proto_rawDescGZIP(), []int{0}
 }
 
 type GetPrivateKeyResponseDto struct {
@@ -66,7 +66,7 @@ type GetPrivateKeyResponseDto struct {
 
 func (x *GetPrivateKeyResponseDto) Reset() {
 	*x = GetPrivateKeyResponseDto{}
-	mi := &file_pkg_proto_key_proto_msgTypes[1]
+	mi := &file_pkg_proto_email_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -78,7 +78,7 @@ func (x *GetPrivateKeyResponseDto) String() string {
 func (*GetPrivateKeyResponseDto) ProtoMessage() {}
 
 func (x *GetPrivateKeyResponseDto) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_proto_key_proto_msgTypes[1]
+	mi := &file_pkg_proto_email_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -91,7 +91,7 @@ func (x *GetPrivateKeyResponseDto) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPrivateKeyResponseDto.ProtoReflect.Descriptor instead.
 func (*GetPrivateKeyResponseDto) Descriptor() ([]byte, []int) {
-	return file_pkg_proto_key_proto_rawDescGZIP(), []int{1}
+	return file_pkg_proto_email_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GetPrivateKeyResponseDto) GetPrivateKey() string {
@@ -109,7 +109,7 @@ type GetPublicKeyRequestDto struct {
 
 func (x *GetPublicKeyRequestDto) Reset() {
 	*x = GetPublicKeyRequestDto{}
-	mi := &file_pkg_proto_key_proto_msgTypes[2]
+	mi := &file_pkg_proto_email_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -121,7 +121,7 @@ func (x *GetPublicKeyRequestDto) String() string {
 func (*GetPublicKeyRequestDto) ProtoMessage() {}
 
 func (x *GetPublicKeyRequestDto) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_proto_key_proto_msgTypes[2]
+	mi := &file_pkg_proto_email_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -134,7 +134,7 @@ func (x *GetPublicKeyRequestDto) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPublicKeyRequestDto.ProtoReflect.Descriptor instead.
 func (*GetPublicKeyRequestDto) Descriptor() ([]byte, []int) {
-	return file_pkg_proto_key_proto_rawDescGZIP(), []int{2}
+	return file_pkg_proto_email_proto_rawDescGZIP(), []int{2}
 }
 
 type GetPublicKeyResponseDto struct {
@@ -146,7 +146,7 @@ type GetPublicKeyResponseDto struct {
 
 func (x *GetPublicKeyResponseDto) Reset() {
 	*x = GetPublicKeyResponseDto{}
-	mi := &file_pkg_proto_key_proto_msgTypes[3]
+	mi := &file_pkg_proto_email_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -158,7 +158,7 @@ func (x *GetPublicKeyResponseDto) String() string {
 func (*GetPublicKeyResponseDto) ProtoMessage() {}
 
 func (x *GetPublicKeyResponseDto) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_proto_key_proto_msgTypes[3]
+	mi := &file_pkg_proto_email_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -171,7 +171,7 @@ func (x *GetPublicKeyResponseDto) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPublicKeyResponseDto.ProtoReflect.Descriptor instead.
 func (*GetPublicKeyResponseDto) Descriptor() ([]byte, []int) {
-	return file_pkg_proto_key_proto_rawDescGZIP(), []int{3}
+	return file_pkg_proto_email_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetPublicKeyResponseDto) GetPublicKey() string {
@@ -181,9 +181,9 @@ func (x *GetPublicKeyResponseDto) GetPublicKey() string {
 	return ""
 }
 
-var File_pkg_proto_key_proto protoreflect.FileDescriptor
+var File_pkg_proto_email_proto protoreflect.FileDescriptor
 
-var file_pkg_proto_key_proto_rawDesc = string([]byte{
+var file_pkg_proto_email_proto_rawDesc = string([]byte{
 	0x0a, 0x13, 0x70, 0x6b, 0x67, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x6b, 0x65, 0x79, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x19, 0x0a, 0x17, 0x47, 0x65, 0x74, 0x50, 0x72, 0x69, 0x76,
 	0x61, 0x74, 0x65, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x44, 0x74, 0x6f,
@@ -211,25 +211,25 @@ var file_pkg_proto_key_proto_rawDesc = string([]byte{
 })
 
 var (
-	file_pkg_proto_key_proto_rawDescOnce sync.Once
-	file_pkg_proto_key_proto_rawDescData []byte
+	file_pkg_proto_email_proto_rawDescOnce sync.Once
+	file_pkg_proto_email_proto_rawDescData []byte
 )
 
-func file_pkg_proto_key_proto_rawDescGZIP() []byte {
-	file_pkg_proto_key_proto_rawDescOnce.Do(func() {
-		file_pkg_proto_key_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_pkg_proto_key_proto_rawDesc), len(file_pkg_proto_key_proto_rawDesc)))
+func file_pkg_proto_email_proto_rawDescGZIP() []byte {
+	file_pkg_proto_email_proto_rawDescOnce.Do(func() {
+		file_pkg_proto_email_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_pkg_proto_email_proto_rawDesc), len(file_pkg_proto_email_proto_rawDesc)))
 	})
-	return file_pkg_proto_key_proto_rawDescData
+	return file_pkg_proto_email_proto_rawDescData
 }
 
-var file_pkg_proto_key_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_pkg_proto_key_proto_goTypes = []any{
+var file_pkg_proto_email_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_pkg_proto_email_proto_goTypes = []any{
 	(*GetPrivateKeyRequestDto)(nil),  // 0: GetPrivateKeyRequestDto
 	(*GetPrivateKeyResponseDto)(nil), // 1: GetPrivateKeyResponseDto
 	(*GetPublicKeyRequestDto)(nil),   // 2: GetPublicKeyRequestDto
 	(*GetPublicKeyResponseDto)(nil),  // 3: GetPublicKeyResponseDto
 }
-var file_pkg_proto_key_proto_depIdxs = []int32{
+var file_pkg_proto_email_proto_depIdxs = []int32{
 	0, // 0: KeyGrpcService.GetPrivateKey:input_type -> GetPrivateKeyRequestDto
 	2, // 1: KeyGrpcService.GetPublicKey:input_type -> GetPublicKeyRequestDto
 	1, // 2: KeyGrpcService.GetPrivateKey:output_type -> GetPrivateKeyResponseDto
@@ -241,26 +241,26 @@ var file_pkg_proto_key_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_pkg_proto_key_proto_init() }
-func file_pkg_proto_key_proto_init() {
-	if File_pkg_proto_key_proto != nil {
+func init() { file_pkg_proto_email_proto_init() }
+func file_pkg_proto_email_proto_init() {
+	if File_pkg_proto_email_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pkg_proto_key_proto_rawDesc), len(file_pkg_proto_key_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pkg_proto_email_proto_rawDesc), len(file_pkg_proto_email_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_pkg_proto_key_proto_goTypes,
-		DependencyIndexes: file_pkg_proto_key_proto_depIdxs,
-		MessageInfos:      file_pkg_proto_key_proto_msgTypes,
+		GoTypes:           file_pkg_proto_email_proto_goTypes,
+		DependencyIndexes: file_pkg_proto_email_proto_depIdxs,
+		MessageInfos:      file_pkg_proto_email_proto_msgTypes,
 	}.Build()
-	File_pkg_proto_key_proto = out.File
-	file_pkg_proto_key_proto_goTypes = nil
-	file_pkg_proto_key_proto_depIdxs = nil
+	File_pkg_proto_email_proto = out.File
+	file_pkg_proto_email_proto_goTypes = nil
+	file_pkg_proto_email_proto_depIdxs = nil
 }

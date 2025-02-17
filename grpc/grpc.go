@@ -7,8 +7,8 @@ import (
 	"net"
 	"os"
 
-	"github.com/charitan-go/key-server/internal/key/service"
-	"github.com/charitan-go/key-server/pkg/proto"
+	"github.com/charitan-go/email-server/internal/email/service"
+	"github.com/charitan-go/email-server/pkg/proto"
 	consulapi "github.com/hashicorp/consul/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -19,16 +19,16 @@ type GrpcServer struct {
 	proto.UnimplementedKeyGrpcServiceServer
 	grpcServer *grpc.Server
 
-	keySvc service.KeyService
+	emailSvc service.KeyService
 }
 
-func NewGrpcServer(keySvc service.KeyService) *GrpcServer {
+func NewGrpcServer(emailSvc service.KeyService) *GrpcServer {
 	grpcServer := grpc.NewServer()
-	keyGrpcServer := &GrpcServer{}
+	emailGrpcServer := &GrpcServer{}
 
-	proto.RegisterKeyGrpcServiceServer(grpcServer, keyGrpcServer)
-	keyGrpcServer.keySvc = keySvc
-	keyGrpcServer.grpcServer = grpcServer
+	proto.RegisterKeyGrpcServiceServer(grpcServer, emailGrpcServer)
+	emailGrpcServer.emailSvc = emailSvc
+	emailGrpcServer.grpcServer = grpcServer
 
 	address := os.Getenv("SERVICE_ID")
 	grpcServiceName := fmt.Sprintf("%s-grpc", address)
@@ -38,7 +38,7 @@ func NewGrpcServer(keySvc service.KeyService) *GrpcServer {
 	grpc_health_v1.RegisterHealthServer(grpcServer, healthServer)
 	healthServer.SetServingStatus(grpcServiceName, grpc_health_v1.HealthCheckResponse_SERVING)
 
-	return keyGrpcServer
+	return emailGrpcServer
 }
 
 func (*GrpcServer) setupServiceRegistry() {
@@ -80,8 +80,8 @@ func (s *GrpcServer) Run() {
 	s.setupServiceRegistry()
 	log.Println("Setup service registry for grpc service ok")
 
-	// Generate key pairs
-	// s.keySvc.GenerateKeyPairs()
+	// Generate email pairs
+	// s.emailSvc.GenerateKeyPairs()
 
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
@@ -99,7 +99,7 @@ func (s *GrpcServer) GetPrivateKey(
 	ctx context.Context,
 	reqDto *proto.GetPrivateKeyRequestDto,
 ) (*proto.GetPrivateKeyResponseDto, error) {
-	resDto, err := s.keySvc.HandleGetPrivateKeyGrpc(reqDto)
+	resDto, err := s.emailSvc.HandleGetPrivateKeyGrpc(reqDto)
 	return resDto, err
 }
 
@@ -107,6 +107,6 @@ func (s *GrpcServer) GetPublicKey(
 	ctx context.Context,
 	reqDto *proto.GetPublicKeyRequestDto,
 ) (*proto.GetPublicKeyResponseDto, error) {
-	resDto, err := s.keySvc.HandleGetPublicKeyGrpc(reqDto)
+	resDto, err := s.emailSvc.HandleGetPublicKeyGrpc(reqDto)
 	return resDto, err
 }

@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.2
-// source: pkg/proto/key.proto
+// source: pkg/proto/email.proto
 
 package proto
 
@@ -31,15 +31,15 @@ type KeyGrpcServiceClient interface {
 	GetPublicKey(ctx context.Context, in *GetPublicKeyRequestDto, opts ...grpc.CallOption) (*GetPublicKeyResponseDto, error)
 }
 
-type keyGrpcServiceClient struct {
+type emailGrpcServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
 func NewKeyGrpcServiceClient(cc grpc.ClientConnInterface) KeyGrpcServiceClient {
-	return &keyGrpcServiceClient{cc}
+	return &emailGrpcServiceClient{cc}
 }
 
-func (c *keyGrpcServiceClient) GetPrivateKey(ctx context.Context, in *GetPrivateKeyRequestDto, opts ...grpc.CallOption) (*GetPrivateKeyResponseDto, error) {
+func (c *emailGrpcServiceClient) GetPrivateKey(ctx context.Context, in *GetPrivateKeyRequestDto, opts ...grpc.CallOption) (*GetPrivateKeyResponseDto, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetPrivateKeyResponseDto)
 	err := c.cc.Invoke(ctx, KeyGrpcService_GetPrivateKey_FullMethodName, in, out, cOpts...)
@@ -49,7 +49,7 @@ func (c *keyGrpcServiceClient) GetPrivateKey(ctx context.Context, in *GetPrivate
 	return out, nil
 }
 
-func (c *keyGrpcServiceClient) GetPublicKey(ctx context.Context, in *GetPublicKeyRequestDto, opts ...grpc.CallOption) (*GetPublicKeyResponseDto, error) {
+func (c *emailGrpcServiceClient) GetPublicKey(ctx context.Context, in *GetPublicKeyRequestDto, opts ...grpc.CallOption) (*GetPublicKeyResponseDto, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetPublicKeyResponseDto)
 	err := c.cc.Invoke(ctx, KeyGrpcService_GetPublicKey_FullMethodName, in, out, cOpts...)
@@ -155,5 +155,5 @@ var KeyGrpcService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "pkg/proto/key.proto",
+	Metadata: "pkg/proto/email.proto",
 }

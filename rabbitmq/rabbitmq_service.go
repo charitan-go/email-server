@@ -82,7 +82,7 @@ func (*rabbitmqServiceImpl) DeclareQueue(ch *amqp.Channel, queueName string) err
 func (*rabbitmqServiceImpl) Publish(ch *amqp.Channel, exchangeName, routingKey string, msg amqp.Publishing) error {
 	err := ch.Publish(
 		exchangeName, // exchange
-		routingKey,   // routing key
+		routingKey,   // routing email
 		false,        // mandatory
 		false,        // immediate
 		msg,          // body

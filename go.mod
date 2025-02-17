@@ -1,4 +1,4 @@
-module github.com/charitan-go/key-server
+module github.com/charitan-go/email-server
 
 go 1.23.6
 

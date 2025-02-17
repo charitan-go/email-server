@@ -7,10 +7,10 @@ import (
 	"os"
 )
 
-func ReadEnv(key string) (string, error) {
-	str := os.Getenv(key)
+func ReadEnv(email string) (string, error) {
+	str := os.Getenv(email)
 	if str == "" {
-		msg := fmt.Sprintf("Error in reading %s", key)
+		msg := fmt.Sprintf("Error in reading %s", email)
 		log.Fatalln(msg)
 		return msg, errors.New(msg)
 	}
