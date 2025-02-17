@@ -15,9 +15,9 @@ func runServers(rabbitmqSrv *rabbitmq.RabbitmqServer) {
 	// Start gRPC server
 	go func() {
 		log.Println("In goroutine of rabbitmq server")
-		// rabbitmqSrv.Run()
+		rabbitmqSrv.Run()
 
-		select {}
+		// select {}
 	}()
 }
 

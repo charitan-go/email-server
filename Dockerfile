@@ -2,7 +2,7 @@
 
 FROM golang:1.23-bookworm
 
-# RUN apt-get install 
+RUN apt-get update -y && apt-get install -y iputils-ping
 
 COPY . /app 
 
