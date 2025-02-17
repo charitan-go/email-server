@@ -13,7 +13,7 @@ type RabbitmqService interface {
 	DeclareExchange(ch *amqp.Channel, exchangeName string) error
 	DeclareQueue(ch *amqp.Channel, queueName string) error
 
-	Publish(ch *amqp.Channel, exChangeName, routingKey string, msg amqp.Publishing) error
+	Publish(ch *amqp.Channel, exChangeName, routingEmail string, msg amqp.Publishing) error
 }
 
 type rabbitmqServiceImpl struct {
@@ -79,17 +79,17 @@ func (*rabbitmqServiceImpl) DeclareQueue(ch *amqp.Channel, queueName string) err
 	return err
 }
 
-func (*rabbitmqServiceImpl) Publish(ch *amqp.Channel, exchangeName, routingKey string, msg amqp.Publishing) error {
+func (*rabbitmqServiceImpl) Publish(ch *amqp.Channel, exchangeName, routingEmail string, msg amqp.Publishing) error {
 	err := ch.Publish(
 		exchangeName, // exchange
-		routingKey,   // routing email
+		routingEmail,   // routing email
 		false,        // mandatory
 		false,        // immediate
 		msg,          // body
 	)
 
 	if err != nil {
-		log.Fatalf("Cannot publish topic with exchangeName=%s, routingKey=%s\n", exchangeName, routingKey)
+		log.Fatalf("Cannot publish topic with exchangeName=%s, routingEmail=%s\n", exchangeName, routingEmail)
 	}
 
 	return err

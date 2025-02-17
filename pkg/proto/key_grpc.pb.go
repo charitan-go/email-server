@@ -19,139 +19,139 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	KeyGrpcService_GetPrivateKey_FullMethodName = "/KeyGrpcService/GetPrivateKey"
-	KeyGrpcService_GetPublicKey_FullMethodName  = "/KeyGrpcService/GetPublicKey"
+	EmailGrpcService_GetPrivateEmail_FullMethodName = "/EmailGrpcService/GetPrivateEmail"
+	EmailGrpcService_GetPublicEmail_FullMethodName  = "/EmailGrpcService/GetPublicEmail"
 )
 
-// KeyGrpcServiceClient is the client API for KeyGrpcService service.
+// EmailGrpcServiceClient is the client API for EmailGrpcService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type KeyGrpcServiceClient interface {
-	GetPrivateKey(ctx context.Context, in *GetPrivateKeyRequestDto, opts ...grpc.CallOption) (*GetPrivateKeyResponseDto, error)
-	GetPublicKey(ctx context.Context, in *GetPublicKeyRequestDto, opts ...grpc.CallOption) (*GetPublicKeyResponseDto, error)
+type EmailGrpcServiceClient interface {
+	GetPrivateEmail(ctx context.Context, in *GetPrivateEmailRequestDto, opts ...grpc.CallOption) (*GetPrivateEmailResponseDto, error)
+	GetPublicEmail(ctx context.Context, in *GetPublicEmailRequestDto, opts ...grpc.CallOption) (*GetPublicEmailResponseDto, error)
 }
 
 type emailGrpcServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewKeyGrpcServiceClient(cc grpc.ClientConnInterface) KeyGrpcServiceClient {
+func NewEmailGrpcServiceClient(cc grpc.ClientConnInterface) EmailGrpcServiceClient {
 	return &emailGrpcServiceClient{cc}
 }
 
-func (c *emailGrpcServiceClient) GetPrivateKey(ctx context.Context, in *GetPrivateKeyRequestDto, opts ...grpc.CallOption) (*GetPrivateKeyResponseDto, error) {
+func (c *emailGrpcServiceClient) GetPrivateEmail(ctx context.Context, in *GetPrivateEmailRequestDto, opts ...grpc.CallOption) (*GetPrivateEmailResponseDto, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetPrivateKeyResponseDto)
-	err := c.cc.Invoke(ctx, KeyGrpcService_GetPrivateKey_FullMethodName, in, out, cOpts...)
+	out := new(GetPrivateEmailResponseDto)
+	err := c.cc.Invoke(ctx, EmailGrpcService_GetPrivateEmail_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *emailGrpcServiceClient) GetPublicKey(ctx context.Context, in *GetPublicKeyRequestDto, opts ...grpc.CallOption) (*GetPublicKeyResponseDto, error) {
+func (c *emailGrpcServiceClient) GetPublicEmail(ctx context.Context, in *GetPublicEmailRequestDto, opts ...grpc.CallOption) (*GetPublicEmailResponseDto, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetPublicKeyResponseDto)
-	err := c.cc.Invoke(ctx, KeyGrpcService_GetPublicKey_FullMethodName, in, out, cOpts...)
+	out := new(GetPublicEmailResponseDto)
+	err := c.cc.Invoke(ctx, EmailGrpcService_GetPublicEmail_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// KeyGrpcServiceServer is the server API for KeyGrpcService service.
-// All implementations must embed UnimplementedKeyGrpcServiceServer
+// EmailGrpcServiceServer is the server API for EmailGrpcService service.
+// All implementations must embed UnimplementedEmailGrpcServiceServer
 // for forward compatibility.
-type KeyGrpcServiceServer interface {
-	GetPrivateKey(context.Context, *GetPrivateKeyRequestDto) (*GetPrivateKeyResponseDto, error)
-	GetPublicKey(context.Context, *GetPublicKeyRequestDto) (*GetPublicKeyResponseDto, error)
-	mustEmbedUnimplementedKeyGrpcServiceServer()
+type EmailGrpcServiceServer interface {
+	GetPrivateEmail(context.Context, *GetPrivateEmailRequestDto) (*GetPrivateEmailResponseDto, error)
+	GetPublicEmail(context.Context, *GetPublicEmailRequestDto) (*GetPublicEmailResponseDto, error)
+	mustEmbedUnimplementedEmailGrpcServiceServer()
 }
 
-// UnimplementedKeyGrpcServiceServer must be embedded to have
+// UnimplementedEmailGrpcServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedKeyGrpcServiceServer struct{}
+type UnimplementedEmailGrpcServiceServer struct{}
 
-func (UnimplementedKeyGrpcServiceServer) GetPrivateKey(context.Context, *GetPrivateKeyRequestDto) (*GetPrivateKeyResponseDto, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPrivateKey not implemented")
+func (UnimplementedEmailGrpcServiceServer) GetPrivateEmail(context.Context, *GetPrivateEmailRequestDto) (*GetPrivateEmailResponseDto, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPrivateEmail not implemented")
 }
-func (UnimplementedKeyGrpcServiceServer) GetPublicKey(context.Context, *GetPublicKeyRequestDto) (*GetPublicKeyResponseDto, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPublicKey not implemented")
+func (UnimplementedEmailGrpcServiceServer) GetPublicEmail(context.Context, *GetPublicEmailRequestDto) (*GetPublicEmailResponseDto, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPublicEmail not implemented")
 }
-func (UnimplementedKeyGrpcServiceServer) mustEmbedUnimplementedKeyGrpcServiceServer() {}
-func (UnimplementedKeyGrpcServiceServer) testEmbeddedByValue()                        {}
+func (UnimplementedEmailGrpcServiceServer) mustEmbedUnimplementedEmailGrpcServiceServer() {}
+func (UnimplementedEmailGrpcServiceServer) testEmbeddedByValue()                        {}
 
-// UnsafeKeyGrpcServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to KeyGrpcServiceServer will
+// UnsafeEmailGrpcServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to EmailGrpcServiceServer will
 // result in compilation errors.
-type UnsafeKeyGrpcServiceServer interface {
-	mustEmbedUnimplementedKeyGrpcServiceServer()
+type UnsafeEmailGrpcServiceServer interface {
+	mustEmbedUnimplementedEmailGrpcServiceServer()
 }
 
-func RegisterKeyGrpcServiceServer(s grpc.ServiceRegistrar, srv KeyGrpcServiceServer) {
-	// If the following call pancis, it indicates UnimplementedKeyGrpcServiceServer was
+func RegisterEmailGrpcServiceServer(s grpc.ServiceRegistrar, srv EmailGrpcServiceServer) {
+	// If the following call pancis, it indicates UnimplementedEmailGrpcServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&KeyGrpcService_ServiceDesc, srv)
+	s.RegisterService(&EmailGrpcService_ServiceDesc, srv)
 }
 
-func _KeyGrpcService_GetPrivateKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPrivateKeyRequestDto)
+func _EmailGrpcService_GetPrivateEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPrivateEmailRequestDto)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(KeyGrpcServiceServer).GetPrivateKey(ctx, in)
+		return srv.(EmailGrpcServiceServer).GetPrivateEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: KeyGrpcService_GetPrivateKey_FullMethodName,
+		FullMethod: EmailGrpcService_GetPrivateEmail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KeyGrpcServiceServer).GetPrivateKey(ctx, req.(*GetPrivateKeyRequestDto))
+		return srv.(EmailGrpcServiceServer).GetPrivateEmail(ctx, req.(*GetPrivateEmailRequestDto))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _KeyGrpcService_GetPublicKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPublicKeyRequestDto)
+func _EmailGrpcService_GetPublicEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPublicEmailRequestDto)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(KeyGrpcServiceServer).GetPublicKey(ctx, in)
+		return srv.(EmailGrpcServiceServer).GetPublicEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: KeyGrpcService_GetPublicKey_FullMethodName,
+		FullMethod: EmailGrpcService_GetPublicEmail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KeyGrpcServiceServer).GetPublicKey(ctx, req.(*GetPublicKeyRequestDto))
+		return srv.(EmailGrpcServiceServer).GetPublicEmail(ctx, req.(*GetPublicEmailRequestDto))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// KeyGrpcService_ServiceDesc is the grpc.ServiceDesc for KeyGrpcService service.
+// EmailGrpcService_ServiceDesc is the grpc.ServiceDesc for EmailGrpcService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var KeyGrpcService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "KeyGrpcService",
-	HandlerType: (*KeyGrpcServiceServer)(nil),
+var EmailGrpcService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "EmailGrpcService",
+	HandlerType: (*EmailGrpcServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetPrivateKey",
-			Handler:    _KeyGrpcService_GetPrivateKey_Handler,
+			MethodName: "GetPrivateEmail",
+			Handler:    _EmailGrpcService_GetPrivateEmail_Handler,
 		},
 		{
-			MethodName: "GetPublicKey",
-			Handler:    _KeyGrpcService_GetPublicKey_Handler,
+			MethodName: "GetPublicEmail",
+			Handler:    _EmailGrpcService_GetPublicEmail_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

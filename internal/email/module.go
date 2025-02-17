@@ -5,8 +5,8 @@ import (
 	"go.uber.org/fx"
 )
 
-var KeyModule = fx.Module("email",
+var EmailModule = fx.Module("email",
 	fx.Provide(
-		service.NewKeyService,
+		service.NewEmailService,
 	),
 )

@@ -23,7 +23,7 @@ func runServers(grpcSrv *grpc.GrpcServer) {
 func Run() {
 
 	fx.New(
-		email.KeyModule,
+		email.EmailModule,
 		rabbitmq.RabbitmqModule,
 		grpc.GrpcModule,
 		fx.Invoke(runServers),

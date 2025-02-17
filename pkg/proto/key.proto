@@ -2,21 +2,21 @@ syntax = "proto3";
 
 option go_package = "./pkg/proto";
 
-service KeyGrpcService {
-    rpc GetPrivateKey(GetPrivateKeyRequestDto) returns (GetPrivateKeyResponseDto);
-    rpc GetPublicKey(GetPublicKeyRequestDto) returns (GetPublicKeyResponseDto);
+service EmailGrpcService {
+    rpc GetPrivateEmail(GetPrivateEmailRequestDto) returns (GetPrivateEmailResponseDto);
+    rpc GetPublicEmail(GetPublicEmailRequestDto) returns (GetPublicEmailResponseDto);
 }
 
-message GetPrivateKeyRequestDto {
+message GetPrivateEmailRequestDto {
   }
 
-message GetPrivateKeyResponseDto {
-    string privateKey = 1;
+message GetPrivateEmailResponseDto {
+    string privateEmail = 1;
   }
 
-message GetPublicKeyRequestDto {
+message GetPublicEmailRequestDto {
   }
 
-message GetPublicKeyResponseDto {
-    string publicKey = 1;
+message GetPublicEmailResponseDto {
+    string publicEmail = 1;
   }

@@ -16,17 +16,17 @@ import (
 )
 
 type GrpcServer struct {
-	proto.UnimplementedKeyGrpcServiceServer
+	proto.UnimplementedEmailGrpcServiceServer
 	grpcServer *grpc.Server
 
-	emailSvc service.KeyService
+	emailSvc service.EmailService
 }
 
-func NewGrpcServer(emailSvc service.KeyService) *GrpcServer {
+func NewGrpcServer(emailSvc service.EmailService) *GrpcServer {
 	grpcServer := grpc.NewServer()
 	emailGrpcServer := &GrpcServer{}
 
-	proto.RegisterKeyGrpcServiceServer(grpcServer, emailGrpcServer)
+	proto.RegisterEmailGrpcServiceServer(grpcServer, emailGrpcServer)
 	emailGrpcServer.emailSvc = emailSvc
 	emailGrpcServer.grpcServer = grpcServer
 
@@ -81,7 +81,7 @@ func (s *GrpcServer) Run() {
 	log.Println("Setup service registry for grpc service ok")
 
 	// Generate email pairs
-	// s.emailSvc.GenerateKeyPairs()
+	// s.emailSvc.GenerateEmailPairs()
 
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
@@ -95,18 +95,18 @@ func (s *GrpcServer) Run() {
 
 }
 
-func (s *GrpcServer) GetPrivateKey(
-	ctx context.Context,
-	reqDto *proto.GetPrivateKeyRequestDto,
-) (*proto.GetPrivateKeyResponseDto, error) {
-	resDto, err := s.emailSvc.HandleGetPrivateKeyGrpc(reqDto)
-	return resDto, err
-}
-
-func (s *GrpcServer) GetPublicKey(
-	ctx context.Context,
-	reqDto *proto.GetPublicKeyRequestDto,
-) (*proto.GetPublicKeyResponseDto, error) {
-	resDto, err := s.emailSvc.HandleGetPublicKeyGrpc(reqDto)
-	return resDto, err
-}
+// func (s *GrpcServer) GetPrivateEmail(
+// 	ctx context.Context,
+// 	reqDto *proto.GetPrivateEmailRequestDto,
+// ) (*proto.GetPrivateEmailResponseDto, error) {
+// 	resDto, err := s.emailSvc.HandleGetPrivateEmailGrpc(reqDto)
+// 	return resDto, err
+// }
+//
+// func (s *GrpcServer) GetPublicEmail(
+// 	ctx context.Context,
+// 	reqDto *proto.GetPublicEmailRequestDto,
+// ) (*proto.GetPublicEmailResponseDto, error) {
+// 	resDto, err := s.emailSvc.HandleGetPublicEmailGrpc(reqDto)
+// 	return resDto, err
+// }

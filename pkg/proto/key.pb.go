@@ -21,26 +21,26 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type GetPrivateKeyRequestDto struct {
+type GetPrivateEmailRequestDto struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetPrivateKeyRequestDto) Reset() {
-	*x = GetPrivateKeyRequestDto{}
+func (x *GetPrivateEmailRequestDto) Reset() {
+	*x = GetPrivateEmailRequestDto{}
 	mi := &file_pkg_proto_email_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetPrivateKeyRequestDto) String() string {
+func (x *GetPrivateEmailRequestDto) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetPrivateKeyRequestDto) ProtoMessage() {}
+func (*GetPrivateEmailRequestDto) ProtoMessage() {}
 
-func (x *GetPrivateKeyRequestDto) ProtoReflect() protoreflect.Message {
+func (x *GetPrivateEmailRequestDto) ProtoReflect() protoreflect.Message {
 	mi := &file_pkg_proto_email_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -52,32 +52,32 @@ func (x *GetPrivateKeyRequestDto) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetPrivateKeyRequestDto.ProtoReflect.Descriptor instead.
-func (*GetPrivateKeyRequestDto) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetPrivateEmailRequestDto.ProtoReflect.Descriptor instead.
+func (*GetPrivateEmailRequestDto) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_email_proto_rawDescGZIP(), []int{0}
 }
 
-type GetPrivateKeyResponseDto struct {
+type GetPrivateEmailResponseDto struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PrivateKey    string                 `protobuf:"bytes,1,opt,name=privateKey,proto3" json:"privateKey,omitempty"`
+	PrivateEmail    string                 `protobuf:"bytes,1,opt,name=privateEmail,proto3" json:"privateEmail,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetPrivateKeyResponseDto) Reset() {
-	*x = GetPrivateKeyResponseDto{}
+func (x *GetPrivateEmailResponseDto) Reset() {
+	*x = GetPrivateEmailResponseDto{}
 	mi := &file_pkg_proto_email_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetPrivateKeyResponseDto) String() string {
+func (x *GetPrivateEmailResponseDto) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetPrivateKeyResponseDto) ProtoMessage() {}
+func (*GetPrivateEmailResponseDto) ProtoMessage() {}
 
-func (x *GetPrivateKeyResponseDto) ProtoReflect() protoreflect.Message {
+func (x *GetPrivateEmailResponseDto) ProtoReflect() protoreflect.Message {
 	mi := &file_pkg_proto_email_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -89,38 +89,38 @@ func (x *GetPrivateKeyResponseDto) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetPrivateKeyResponseDto.ProtoReflect.Descriptor instead.
-func (*GetPrivateKeyResponseDto) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetPrivateEmailResponseDto.ProtoReflect.Descriptor instead.
+func (*GetPrivateEmailResponseDto) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_email_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetPrivateKeyResponseDto) GetPrivateKey() string {
+func (x *GetPrivateEmailResponseDto) GetPrivateEmail() string {
 	if x != nil {
-		return x.PrivateKey
+		return x.PrivateEmail
 	}
 	return ""
 }
 
-type GetPublicKeyRequestDto struct {
+type GetPublicEmailRequestDto struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetPublicKeyRequestDto) Reset() {
-	*x = GetPublicKeyRequestDto{}
+func (x *GetPublicEmailRequestDto) Reset() {
+	*x = GetPublicEmailRequestDto{}
 	mi := &file_pkg_proto_email_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetPublicKeyRequestDto) String() string {
+func (x *GetPublicEmailRequestDto) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetPublicKeyRequestDto) ProtoMessage() {}
+func (*GetPublicEmailRequestDto) ProtoMessage() {}
 
-func (x *GetPublicKeyRequestDto) ProtoReflect() protoreflect.Message {
+func (x *GetPublicEmailRequestDto) ProtoReflect() protoreflect.Message {
 	mi := &file_pkg_proto_email_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -132,32 +132,32 @@ func (x *GetPublicKeyRequestDto) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetPublicKeyRequestDto.ProtoReflect.Descriptor instead.
-func (*GetPublicKeyRequestDto) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetPublicEmailRequestDto.ProtoReflect.Descriptor instead.
+func (*GetPublicEmailRequestDto) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_email_proto_rawDescGZIP(), []int{2}
 }
 
-type GetPublicKeyResponseDto struct {
+type GetPublicEmailResponseDto struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PublicKey     string                 `protobuf:"bytes,1,opt,name=publicKey,proto3" json:"publicKey,omitempty"`
+	PublicEmail     string                 `protobuf:"bytes,1,opt,name=publicEmail,proto3" json:"publicEmail,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetPublicKeyResponseDto) Reset() {
-	*x = GetPublicKeyResponseDto{}
+func (x *GetPublicEmailResponseDto) Reset() {
+	*x = GetPublicEmailResponseDto{}
 	mi := &file_pkg_proto_email_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetPublicKeyResponseDto) String() string {
+func (x *GetPublicEmailResponseDto) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetPublicKeyResponseDto) ProtoMessage() {}
+func (*GetPublicEmailResponseDto) ProtoMessage() {}
 
-func (x *GetPublicKeyResponseDto) ProtoReflect() protoreflect.Message {
+func (x *GetPublicEmailResponseDto) ProtoReflect() protoreflect.Message {
 	mi := &file_pkg_proto_email_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -169,14 +169,14 @@ func (x *GetPublicKeyResponseDto) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetPublicKeyResponseDto.ProtoReflect.Descriptor instead.
-func (*GetPublicKeyResponseDto) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetPublicEmailResponseDto.ProtoReflect.Descriptor instead.
+func (*GetPublicEmailResponseDto) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_email_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetPublicKeyResponseDto) GetPublicKey() string {
+func (x *GetPublicEmailResponseDto) GetPublicEmail() string {
 	if x != nil {
-		return x.PublicKey
+		return x.PublicEmail
 	}
 	return ""
 }
@@ -224,16 +224,16 @@ func file_pkg_proto_email_proto_rawDescGZIP() []byte {
 
 var file_pkg_proto_email_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_pkg_proto_email_proto_goTypes = []any{
-	(*GetPrivateKeyRequestDto)(nil),  // 0: GetPrivateKeyRequestDto
-	(*GetPrivateKeyResponseDto)(nil), // 1: GetPrivateKeyResponseDto
-	(*GetPublicKeyRequestDto)(nil),   // 2: GetPublicKeyRequestDto
-	(*GetPublicKeyResponseDto)(nil),  // 3: GetPublicKeyResponseDto
+	(*GetPrivateEmailRequestDto)(nil),  // 0: GetPrivateEmailRequestDto
+	(*GetPrivateEmailResponseDto)(nil), // 1: GetPrivateEmailResponseDto
+	(*GetPublicEmailRequestDto)(nil),   // 2: GetPublicEmailRequestDto
+	(*GetPublicEmailResponseDto)(nil),  // 3: GetPublicEmailResponseDto
 }
 var file_pkg_proto_email_proto_depIdxs = []int32{
-	0, // 0: KeyGrpcService.GetPrivateKey:input_type -> GetPrivateKeyRequestDto
-	2, // 1: KeyGrpcService.GetPublicKey:input_type -> GetPublicKeyRequestDto
-	1, // 2: KeyGrpcService.GetPrivateKey:output_type -> GetPrivateKeyResponseDto
-	3, // 3: KeyGrpcService.GetPublicKey:output_type -> GetPublicKeyResponseDto
+	0, // 0: EmailGrpcService.GetPrivateEmail:input_type -> GetPrivateEmailRequestDto
+	2, // 1: EmailGrpcService.GetPublicEmail:input_type -> GetPublicEmailRequestDto
+	1, // 2: EmailGrpcService.GetPrivateEmail:output_type -> GetPrivateEmailResponseDto
+	3, // 3: EmailGrpcService.GetPublicEmail:output_type -> GetPublicEmailResponseDto
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

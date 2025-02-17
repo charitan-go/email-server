@@ -8,55 +8,53 @@ import (
 	"fmt"
 	"log"
 
-	apigateway "github.com/charitan-go/email-server/external/api-gateway"
-	"github.com/charitan-go/email-server/external/auth"
 	"github.com/charitan-go/email-server/pkg/proto"
 )
 
-type KeyService interface {
-	getPrivateKeyStr() string
+type EmailService interface {
+	getPrivateEmailStr() string
 
-	GenerateKeyPairs() error
+	GenerateEmailPairs() error
 
 	// GRPC Listener
-	HandleGetPrivateKeyGrpc(*proto.GetPrivateKeyRequestDto) (*proto.GetPrivateKeyResponseDto, error)
-	HandleGetPublicKeyGrpc(*proto.GetPublicKeyRequestDto) (*proto.GetPublicKeyResponseDto, error)
+	HandleGetPrivateEmailGrpc(*proto.GetPrivateEmailRequestDto) (*proto.GetPrivateEmailResponseDto, error)
+	HandleGetPublicEmailGrpc(*proto.GetPublicEmailRequestDto) (*proto.GetPublicEmailResponseDto, error)
 }
 
 type emailServiceImpl struct {
-	privateKey                 *rsa.PrivateKey
-	publicKey                  *rsa.PublicKey
+	privateEmail                 *rsa.PrivateEmail
+	publicEmail                  *rsa.PublicEmail
 	authRabbitmqProducer       auth.AuthRabbitmqProducer
 	apiGatewayRabbitmqProducer apigateway.ApiGatewayRabbitmqProducer
 }
 
-func NewKeyService(
+func NewEmailService(
 	authRabbitmqProducer auth.AuthRabbitmqProducer,
-	apiGatewayRabbitmqProducer apigateway.ApiGatewayRabbitmqProducer) KeyService {
+	apiGatewayRabbitmqProducer apigateway.ApiGatewayRabbitmqProducer) EmailService {
 	return &emailServiceImpl{nil, nil, authRabbitmqProducer, apiGatewayRabbitmqProducer}
 }
 
-func (svc *emailServiceImpl) getPrivateKeyStr() string {
+func (svc *emailServiceImpl) getPrivateEmailStr() string {
 	// Convert the RSA private email to DER-encoded PKCS#1 format
-	privateKeyDER := x509.MarshalPKCS1PrivateKey(svc.privateKey)
+	privateEmailDER := x509.MarshalPKCS1PrivateEmail(svc.privateEmail)
 
 	// Create a PEM block with the DER-encoded email
 	pemBlock := &pem.Block{
 		Type:  "RSA PRIVATE KEY",
-		Bytes: privateKeyDER,
+		Bytes: privateEmailDER,
 	}
 
 	// Encode the PEM block to a []byte
-	privateKeyPEM := pem.EncodeToMemory(pemBlock)
+	privateEmailPEM := pem.EncodeToMemory(pemBlock)
 
 	// Convert the PEM []byte to a string
-	privateKeyString := string(privateKeyPEM)
-	return privateKeyString
+	privateEmailString := string(privateEmailPEM)
+	return privateEmailString
 }
 
-func (svc *emailServiceImpl) getPublicKeyStr() string {
+func (svc *emailServiceImpl) getPublicEmailStr() string {
 	// Marshal the public email to DER-encoded PKIX format.
-	derBytes, _ := x509.MarshalPKIXPublicKey(svc.publicKey)
+	derBytes, _ := x509.MarshalPKIXPublicEmail(svc.publicEmail)
 
 	// Create a PEM block with type "PUBLIC KEY".
 	block := &pem.Block{
@@ -68,26 +66,26 @@ func (svc *emailServiceImpl) getPublicKeyStr() string {
 	return string(pem.EncodeToMemory(block))
 }
 
-func (svc *emailServiceImpl) GenerateKeyPairs() error {
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+func (svc *emailServiceImpl) GenerateEmailPairs() error {
+	privateEmail, err := rsa.GenerateEmail(rand.Reader, 2048)
 	if err != nil {
 		log.Fatalf("Cannot generate private email: %v\n", err)
 		return err
 	}
 
 	// Store both emails
-	svc.privateKey = privateKey
-	svc.publicKey = &privateKey.PublicKey
+	svc.privateEmail = privateEmail
+	svc.publicEmail = &privateEmail.PublicEmail
 
 	// Send noti to auth server for get email pairs
-	err = svc.authRabbitmqProducer.NotiGetPrivateKey()
+	err = svc.authRabbitmqProducer.NotiGetPrivateEmail()
 	if err != nil {
 		log.Fatalf("Cannot send noti to auth server: %v\n", err)
 	} else {
 		log.Println("Send noti to auth server success")
 	}
 
-	err = svc.apiGatewayRabbitmqProducer.NotiGetPublicKey()
+	err = svc.apiGatewayRabbitmqProducer.NotiGetPublicEmail()
 	if err != nil {
 		log.Fatalf("Cannot send noti to api gateway: %v\n", err)
 	} else {
@@ -97,18 +95,18 @@ func (svc *emailServiceImpl) GenerateKeyPairs() error {
 	return nil
 }
 
-func (svc *emailServiceImpl) HandleGetPrivateKeyGrpc(*proto.GetPrivateKeyRequestDto) (*proto.GetPrivateKeyResponseDto, error) {
-	if svc.privateKey == nil {
+func (svc *emailServiceImpl) HandleGetPrivateEmailGrpc(*proto.GetPrivateEmailRequestDto) (*proto.GetPrivateEmailResponseDto, error) {
+	if svc.privateEmail == nil {
 		return nil, fmt.Errorf("Private email not available")
 	}
 
-	return &proto.GetPrivateKeyResponseDto{PrivateKey: svc.getPrivateKeyStr()}, nil
+	return &proto.GetPrivateEmailResponseDto{PrivateEmail: svc.getPrivateEmailStr()}, nil
 }
 
-func (svc *emailServiceImpl) HandleGetPublicKeyGrpc(*proto.GetPublicKeyRequestDto) (*proto.GetPublicKeyResponseDto, error) {
-	if svc.publicKey == nil {
+func (svc *emailServiceImpl) HandleGetPublicEmailGrpc(*proto.GetPublicEmailRequestDto) (*proto.GetPublicEmailResponseDto, error) {
+	if svc.publicEmail == nil {
 		return nil, fmt.Errorf("Public email not available")
 	}
 
-	return &proto.GetPublicKeyResponseDto{PublicKey: svc.getPublicKeyStr()}, nil
+	return &proto.GetPublicEmailResponseDto{PublicEmail: svc.getPublicEmailStr()}, nil
 }
