@@ -1,112 +1,75 @@
 package service
 
 import (
-	"crypto/rand"
-	"crypto/rsa"
-	"crypto/x509"
-	"encoding/pem"
-	"fmt"
+	"bytes"
+	"html/template"
 	"log"
 
-	"github.com/charitan-go/email-server/pkg/proto"
+	"github.com/charitan-go/email-server/external/auth"
+	"github.com/charitan-go/email-server/external/inbucket"
 )
 
+var EMAIL_TEMPLATE_DIR = "resource/email"
+
 type EmailService interface {
-	getPrivateEmailStr() string
-
-	GenerateEmailPairs() error
-
-	// GRPC Listener
-	HandleGetPrivateEmailGrpc(*proto.GetPrivateEmailRequestDto) (*proto.GetPrivateEmailResponseDto, error)
-	HandleGetPublicEmailGrpc(*proto.GetPublicEmailRequestDto) (*proto.GetPublicEmailResponseDto, error)
+	HandleRegisterDonorAccountRabbitmq(reqDto *auth.SendRegisterDonorAccountEmailRequestDto) error
 }
 
 type emailServiceImpl struct {
-	privateEmail                 *rsa.PrivateEmail
-	publicEmail                  *rsa.PublicEmail
-	authRabbitmqProducer       auth.AuthRabbitmqProducer
-	apiGatewayRabbitmqProducer apigateway.ApiGatewayRabbitmqProducer
+	inbucketService inbucket.InbucketService
 }
 
-func NewEmailService(
-	authRabbitmqProducer auth.AuthRabbitmqProducer,
-	apiGatewayRabbitmqProducer apigateway.ApiGatewayRabbitmqProducer) EmailService {
-	return &emailServiceImpl{nil, nil, authRabbitmqProducer, apiGatewayRabbitmqProducer}
+func NewEmailService(inbucketService inbucket.InbucketService) EmailService {
+	return &emailServiceImpl{inbucketService}
 }
 
-func (svc *emailServiceImpl) getPrivateEmailStr() string {
-	// Convert the RSA private email to DER-encoded PKCS#1 format
-	privateEmailDER := x509.MarshalPKCS1PrivateEmail(svc.privateEmail)
+// HandleRegisterAccountRabbitmq implements EmailService.
+func (svc *emailServiceImpl) HandleRegisterDonorAccountRabbitmq(reqDto *auth.SendRegisterDonorAccountEmailRequestDto) error {
+	log.Println("Receive topic for register account")
 
-	// Create a PEM block with the DER-encoded email
-	pemBlock := &pem.Block{
-		Type:  "RSA PRIVATE KEY",
-		Bytes: privateEmailDER,
-	}
+	// Prepare toEmail
+	toEmail := []string{reqDto.Email}
 
-	// Encode the PEM block to a []byte
-	privateEmailPEM := pem.EncodeToMemory(pemBlock)
-
-	// Convert the PEM []byte to a string
-	privateEmailString := string(privateEmailPEM)
-	return privateEmailString
-}
-
-func (svc *emailServiceImpl) getPublicEmailStr() string {
-	// Marshal the public email to DER-encoded PKIX format.
-	derBytes, _ := x509.MarshalPKIXPublicEmail(svc.publicEmail)
-
-	// Create a PEM block with type "PUBLIC KEY".
-	block := &pem.Block{
-		Type:  "PUBLIC KEY",
-		Bytes: derBytes,
-	}
-
-	// Encode the PEM block to a memory buffer and return it as a string.
-	return string(pem.EncodeToMemory(block))
-}
-
-func (svc *emailServiceImpl) GenerateEmailPairs() error {
-	privateEmail, err := rsa.GenerateEmail(rand.Reader, 2048)
+	// Load body from template engine
+	tmpl, err := template.ParseFiles(EMAIL_TEMPLATE_DIR + "/register_donor_account.html")
 	if err != nil {
-		log.Fatalf("Cannot generate private email: %v\n", err)
+		log.Fatalf("Cannot load email template: %v\n", err)
 		return err
 	}
 
-	// Store both emails
-	svc.privateEmail = privateEmail
-	svc.publicEmail = &privateEmail.PublicEmail
+	// Prepare email body
+	var body bytes.Buffer
 
-	// Send noti to auth server for get email pairs
-	err = svc.authRabbitmqProducer.NotiGetPrivateEmail()
-	if err != nil {
-		log.Fatalf("Cannot send noti to auth server: %v\n", err)
-	} else {
-		log.Println("Send noti to auth server success")
+	// Build the email message (including headers)
+	body.WriteString("Subject: Test Email from Inbucket\n")
+	body.WriteString("MIME-version: 1.0;\r\n")
+	body.WriteString("Content-Type: text/html; charset=\"UTF-8\";\r\n\r\n")
+
+	// Execute the template with the reqDto
+	if err := tmpl.Execute(&body, reqDto); err != nil {
+		log.Fatalf("Cannot execute the mail template: %v\n", err)
+		return err
 	}
 
-	err = svc.apiGatewayRabbitmqProducer.NotiGetPublicEmail()
-	if err != nil {
-		log.Fatalf("Cannot send noti to api gateway: %v\n", err)
-	} else {
-		log.Println("Send noti to api gateway success")
+	// Send email
+	if err := svc.inbucketService.SendEmail(&inbucket.SendEmailRequestDto{ToEmail: toEmail, Content: body.Bytes()}); err != nil {
+		log.Fatalf("Cannot send email: %v\n", err)
+		return err
 	}
 
+	// mime := "MIME-version: 1.0;\nContent-Type: text/plain; charset=\"UTF-8\";\n\n"
+	// body := "Hello,\n\nThis is a test email sent to Inbucket.\n\nRegards,\nYour App"
+	// message := []byte(subject + mime + body)
+	//
+	// // Inbucket SMTP server address (default is 127.0.0.1:2500)
+	// addr := "mail-server:2500"
+	//
+	// // Send the email without authentication (Inbucket accepts unauthenticated mail for testing)
+	// err := smtp.SendMail(addr, nil, from, to, message)
+	// if err != nil {
+	// 	log.Fatalf("Failed to send email: %v", err)
+	// }
+	// log.Println("Email sent successfully!")
+	//
 	return nil
-}
-
-func (svc *emailServiceImpl) HandleGetPrivateEmailGrpc(*proto.GetPrivateEmailRequestDto) (*proto.GetPrivateEmailResponseDto, error) {
-	if svc.privateEmail == nil {
-		return nil, fmt.Errorf("Private email not available")
-	}
-
-	return &proto.GetPrivateEmailResponseDto{PrivateEmail: svc.getPrivateEmailStr()}, nil
-}
-
-func (svc *emailServiceImpl) HandleGetPublicEmailGrpc(*proto.GetPublicEmailRequestDto) (*proto.GetPublicEmailResponseDto, error) {
-	if svc.publicEmail == nil {
-		return nil, fmt.Errorf("Public email not available")
-	}
-
-	return &proto.GetPublicEmailResponseDto{PublicEmail: svc.getPublicEmailStr()}, nil
 }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Confirm Your Donor Registration</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .header {
+        background-color: oklch(0.627 0.194 149.214);
+        padding: 15px;
+        border-radius: 8px 8px 0 0;
+        color: #ffffff;
+        font-size: 22px;
+        font-weight: bold;
+      }
+
+      .content {
+        padding: 20px;
+        color: #333333;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: oklch(0.627 0.194 149.214);
+        text-decoration: none;
+        border-radius: 6px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      .button:hover {
+        background-color: oklch(0.57 0.18 149.214);
+      }
+
+      .footer {
+        font-size: 12px;
+        color: #888888;
+        padding: 15px;
+        margin-top: 20px;
+        border-top: 1px solid #dddddd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">Confirm Your Donor Registration</div>
+      <div class="content">
+        <p>Hello <strong>{{.FirstName}} {{.LastName}}</strong>,</p>
+        <p>Thank you for registering as a donor with <strong>Charitan-Go</strong>.</p>
+        <p>Please confirm your registration by clicking the button below:</p>
+        <a href="http://localhost:8000/" class="button">Confirm Registration</a>
+        <p>If you did not register for this account, please ignore this email.</p>
+      </div>
+      <div class="footer">
+        <p>Best regards,</p>
+        <p><strong>Charitan-Go Team</strong></p>
+      </div>
+    </div>
+  </body>
+</html>

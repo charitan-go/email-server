@@ -12,8 +12,10 @@ type RabbitmqService interface {
 	ConnectRabbitmq() (*amqp.Channel, error)
 	DeclareExchange(ch *amqp.Channel, exchangeName string) error
 	DeclareQueue(ch *amqp.Channel, queueName string) error
+	QueueBind(ch *amqp.Channel, queueName, routingKey, exchangeName string) error
 
-	Publish(ch *amqp.Channel, exChangeName, routingEmail string, msg amqp.Publishing) error
+	Publish(ch *amqp.Channel, exChangeName, routingKey string, msg amqp.Publishing) error
+	Consume(ch *amqp.Channel, queueName string) (<-chan amqp.Delivery, error)
 }
 
 type rabbitmqServiceImpl struct {
@@ -59,7 +61,7 @@ func (*rabbitmqServiceImpl) DeclareExchange(ch *amqp.Channel, exchangeName strin
 	)
 
 	if err != nil {
-		log.Fatalf("Declare exchange failed: %v\n", err)
+		log.Fatalf("Declare exchange failed")
 	}
 
 	return err
@@ -79,23 +81,38 @@ func (*rabbitmqServiceImpl) DeclareQueue(ch *amqp.Channel, queueName string) err
 	return err
 }
 
-func (*rabbitmqServiceImpl) Publish(ch *amqp.Channel, exchangeName, routingEmail string, msg amqp.Publishing) error {
+func (*rabbitmqServiceImpl) QueueBind(ch *amqp.Channel, queueName, routingKey, exchangeName string) error {
+	err := ch.QueueBind(
+		queueName,    // queue name
+		routingKey,   // routing key
+		exchangeName, // exchange
+		false,        // no-wait
+		nil,          // arguments
+	)
+	if err != nil {
+		log.Fatalf("Failed to bind queue: %v", err)
+	}
+
+	return err
+}
+
+func (*rabbitmqServiceImpl) Publish(ch *amqp.Channel, exchangeName, routingKey string, msg amqp.Publishing) error {
 	err := ch.Publish(
 		exchangeName, // exchange
-		routingEmail,   // routing email
+		routingKey,   // routing key
 		false,        // mandatory
 		false,        // immediate
 		msg,          // body
 	)
 
 	if err != nil {
-		log.Fatalf("Cannot publish topic with exchangeName=%s, routingEmail=%s\n", exchangeName, routingEmail)
+		log.Fatalf("Cannot publish topic with exchangeName=%s, routingKey=%s\n", exchangeName, routingKey)
 	}
 
 	return err
 }
 
-func Consume(ch *amqp.Channel, queueName string) (<-chan amqp.Delivery, error) {
+func (*rabbitmqServiceImpl) Consume(ch *amqp.Channel, queueName string) (<-chan amqp.Delivery, error) {
 	msgs, err := ch.Consume(
 		queueName, // queue name
 		"",        // consumer tag
