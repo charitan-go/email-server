@@ -8,9 +8,9 @@ import (
 
 var (
 	EMAIL_AUTH_QUEUE_NAME                = "email.auth.queue"
-	EMAIL_AUTH_ROUTING_KEY               = "email.auth.*"
-	DONOR_REGISTER_ACCOUNT_ROUTING_KEY   = "email.auth.donor.register_account"
-	CHARITY_REGISTER_ACCOUNT_ROUTING_KEY = "email.auth.charity.register_account"
+	EMAIL_AUTH_ROUTING_KEY               = "email.auth.#"
+	REGISTER_DONOR_ACCOUNT_ROUTING_KEY   = "email.auth.donor.register_account"
+	REGISTER_CHARITY_ACCOUNT_ROUTING_KEY = "email.auth.charity.register_account"
 )
 
 func (srv *RabbitmqServer) setupEmailAuthQueue(ch *amqp.Channel) (<-chan amqp.Delivery, error) {

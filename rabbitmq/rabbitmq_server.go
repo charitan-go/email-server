@@ -64,8 +64,9 @@ func (srv *RabbitmqServer) startRabbitmqConsumer() error {
 	go func() {
 		log.Println("Inside the loop to process exchange topics")
 		for d := range authMsgs {
+			log.Printf("Receive topic %s\n", d.RoutingKey)
 			switch d.RoutingKey {
-			case DONOR_REGISTER_ACCOUNT_ROUTING_KEY:
+			case REGISTER_DONOR_ACCOUNT_ROUTING_KEY:
 				{
 					log.Printf("Received message from exchange %s: %s\n", d.RoutingKey, d.Body)
 					var reqDto auth.SendRegisterDonorAccountEmailRequestDto
@@ -77,7 +78,7 @@ func (srv *RabbitmqServer) startRabbitmqConsumer() error {
 
 					srv.emailSvc.HandleRegisterDonorAccountRabbitmq(reqDto)
 				}
-			case CHARITY_REGISTER_ACCOUNT_ROUTING_KEY:
+			case REGISTER_CHARITY_ACCOUNT_ROUTING_KEY:
 				{
 					// log.Printf("Received message from exchange %s: %s\n", d.RoutingKey, d.Body)
 					// var reqDto auth.SendRegisterDonorAccountEmailRequestDto
