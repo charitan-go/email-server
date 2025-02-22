@@ -3,6 +3,7 @@ package app
 import (
 	"log"
 
+	"github.com/charitan-go/email-server/external/inbucket"
 	"github.com/charitan-go/email-server/internal/email"
 	"github.com/charitan-go/email-server/rabbitmq"
 	"go.uber.org/fx"
@@ -12,12 +13,10 @@ import (
 func runServers(rabbitmqSrv *rabbitmq.RabbitmqServer) {
 	log.Println("In invoke")
 
-	// Start gRPC server
+	// Start rabbitmq server
 	go func() {
 		log.Println("In goroutine of rabbitmq server")
 		rabbitmqSrv.Run()
-
-		// select {}
 	}()
 }
 
@@ -26,6 +25,7 @@ func Run() {
 	fx.New(
 		email.EmailModule,
 		rabbitmq.RabbitmqModule,
+		inbucket.InbucketModule,
 		fx.Invoke(runServers),
 	).Run()
 }

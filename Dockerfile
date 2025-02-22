@@ -1,8 +1,4 @@
-# FROM golang:1.23-alpine
-
-FROM golang:1.23-bookworm
-
-RUN apt-get update -y && apt-get install -y iputils-ping
+FROM golang:1.23-alpine
 
 COPY . /app 
 
