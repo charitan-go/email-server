@@ -76,7 +76,7 @@ func (srv *RabbitmqServer) startRabbitmqConsumer() error {
 						return
 					}
 
-					srv.emailSvc.HandleRegisterDonorAccountRabbitmq(reqDto)
+					go srv.emailSvc.HandleRegisterDonorAccountRabbitmq(&reqDto)
 				}
 			case REGISTER_CHARITY_ACCOUNT_ROUTING_KEY:
 				{
